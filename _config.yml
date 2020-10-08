@@ -22,7 +22,7 @@ title: Home | Bhargav
 name: Bhargav Kadupukutla
 email: balu.bhargav186@gmail.com
 description: Code. Books. Music.
-baseurl: "3hargav.github.io"  # the subpath of your site, e.g. /blog
+baseurl:   # the subpath of your site, e.g. /blog
 url: "/" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: _3hargav0_
 github_username:  3hargav
