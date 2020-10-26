@@ -35,19 +35,19 @@ Starting from this original population,{% include marginfigure.html id="generic"
 ## Trade-offs between ES and RL:
 
 ES enjoys multiple advantages over RL algorithms (some of them are a touch technical):
-#### •No need for backpropagation. 
+***No need for backpropagation.***
 ES only requires the passing game of the policy and doesn't require backpropagation (or value function estimation), which makes the code shorter and between 2-3 times faster in practice. On memory-constrained systems, it's also not necessary to stay a record of the episodes for a later update. there's also no must worry about exploding gradients in RNNs. Lastly, we are able to explore a way larger function class of policies, including networks that don't seem to be differentiable (such as in binary networks), or ones that include complex modules (e.g. pathfinding, or various optimization layers).
 
-#### •Highly parallelizable. 
+***Highly parallelizable.*** 
 ES only requires workers to speak some scalars between one another, while in RL it's necessary to synchronize entire parameter vectors (which are often several numbers). Intuitively, this can be because we control the random seeds on each worker, so each worker can locally reconstruct the perturbations of the opposite workers. Thus, all that we'd like to speak between workers is that the reward of every perturbation. As a result, we observed linear speedups in our experiments as we added on the order of thousands of CPU cores to the optimization.
 
-#### •Higher robustness. 
+***Higher robustness.*** 
 Several hyperparameters that are difficult to line in RL implementations are side-stepped in ES. for instance, RL isn't “scale-free”, so one can do very different learning outcomes (including a whole failure) with different settings of the frame-skip hyperparameter in Atari. As we show in our work, ES works about equally well with any frame-skip.
 
-#### •Structured exploration. 
+***Structured exploration.*** 
 Some RL algorithms (especially policy gradients) initialize with random policies, which frequently manifests as random jitter on spot for a protracted time. This effect is mitigated in Q-Learning thanks to epsilon-greedy policies, where the max operation can cause the agents to perform some consistent action for a long time (e.g. holding down a left arrow). this can be more likely to try and do something in an exceedingly game than if the agent jitters on spot, as is that the case with policy gradients. 
 
-#### •Credit assignment over while scales.
+***Credit assignment over while scales.***
 By studying both ES and RL gradient estimators mathematically we are able to see that ES is a horny choice especially when the amount of your time steps in an episode is long, where actions have long-lasting effects, or if no good value function estimates are available.
 Conversely, we also found some challenges to applying ES in practice. One core problem is that so as for ES to figure, adding noise in parameters must cause different outcomes to get some gradient signal. As we elaborate on in our paper, we found that the utilization of virtual batchnorm can help alleviate this problem, but further work on effectively parameterizing neural networks to own variable behaviours as a function of noise is important.
 
